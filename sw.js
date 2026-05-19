@@ -1,5 +1,5 @@
-// Gym-Buddy service worker: cache-first so the app works fully offline at the gym.
-const CACHE = "gymbuddy-v1";
+// Sport Strength service worker: cache-first so the app works fully offline.
+const CACHE = "sportstrength-v2";
 const ASSETS = [
   "./",
   "./index.html",
