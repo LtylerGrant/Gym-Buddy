@@ -1,7 +1,7 @@
 {
-  "name": "Gym-Buddy",
-  "short_name": "Gym-Buddy",
-  "description": "Adaptive gym logger for tennis power + lean bulk training.",
+  "name": "Sport Strength",
+  "short_name": "Sport Strength",
+  "description": "Adaptive sport-specific strength & power training planner and logger.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

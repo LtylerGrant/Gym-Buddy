@@ -1,65 +1,80 @@
-# Gym-Buddy
+# Sport Strength
 
-A lightweight, offline-first gym assistant (installable PWA) for logging
-workouts on your phone. It runs one **blended weekly program** that builds
-**fast-twitch / explosive power for tennis** *and* a **lean bulk** in the same
-week, and it **adapts the routine** to how many days per week you train and how
-much time you have each session.
+A rugged, offline-first training app (installable PWA) that builds a
+**sport-specific strength & power program** tailored to you, then logs your
+workouts on your phone. No backend, no build step, no dependencies — just
+static files.
 
-No backend, no build step, no dependencies — just static files.
+> **Disclaimer:** Sport Strength provides general training information only. It
+> is **not** medical, physiotherapy, or professional coaching advice.
+> Plyometric and explosive work carries injury risk. Consult a qualified
+> professional before starting any program. You train at your own risk.
 
-> **Disclaimer:** Gym-Buddy provides general training information only. It is
-> **not** medical, physiotherapy, or professional coaching advice. Plyometric
-> and explosive work carries injury risk. Consult a qualified professional
-> before starting any program. You train at your own risk.
+## How it personalizes
+
+On first run you pick your **sport**, **training focus**, **age**,
+**bodyweight**, **available equipment**, days/week and time per session. The app
+generates a full program from those inputs:
+
+- **Sport** (Tennis, Baseball, Softball, Basketball, Soccer, Cross Country,
+  Golf, General Athlete) — drives the signature power/skill movement that leads
+  every session (e.g. rotational throws for tennis/golf/baseball, jumps for
+  basketball, sprints/tempo for soccer/XC).
+- **Focus** — Explosive Power & Speed, Lean Bulk / Hypertrophy, Max Strength,
+  or Endurance & Durability. Sets the rep schemes and weekly structure.
+- **Equipment** — free weights, cables, machines, kettlebell/med-ball/plyo.
+  Exercises are filtered to what you have; bodyweight/plyo always available.
+- **Age & bodyweight** — light auto-scaling: accessory volume trims with age
+  (with a warm-up reminder for 40+), and bodyweight gives a rough
+  starting-load suggestion on the main lifts.
 
 ## Features
 
-- **Adaptive routine** — set days/week (2–6) and minutes/session (30–90).
-  Explosive *power* work is always protected and done first while you're fresh;
-  hypertrophy volume fills the rest of the time budget, trimming low-priority
-  accessories before dropping them. A per-session "time today" override
-  regenerates the workout instantly.
-- **Fast logging** — repeat-last-session prefill, +/- steppers, one-tap "set
-  done", built-in rest timer, sticky save bar.
-- **Progress** — estimated 1RM trend (Epley/Brzycki) and weekly volume split by
-  power vs hypertrophy so you can see both goals are being served.
-- **Offline** — cache-first service worker; works with no signal at the gym.
-  Charts are rendered with a tiny built-in canvas renderer (no CDN).
-- **Your data** — stored in `localStorage`; JSON export/import for backup.
+- **Adaptive sessions** — `buildSession()` fits each workout to your time
+  budget; the sport power work is protected and done first while you're fresh,
+  with lower-priority accessories trimmed before being dropped. A per-session
+  "time today" override regenerates the workout instantly.
+- **Exercise guidance** — every movement has a short form cue and a one-tap
+  link to a video demo.
+- **Fast logging** — repeat-last-session prefill, big +/- steppers, one-tap
+  set-done, rest timer, sticky save bar, edit/delete history.
+- **Progress** — estimated 1RM trend (Epley/Brzycki) and weekly volume split
+  by power vs strength/volume, drawn with a built-in canvas renderer (offline).
+- **iPhone-tuned UI** — large tap targets, 16px form controls and a locked
+  viewport so taps never trigger page zoom; rugged Grundéns-inspired look.
+- **Your data** — `localStorage`; JSON export/import for backup. Existing
+  Gym-Buddy logs are migrated automatically (you re-onboard for the new
+  profile).
 
 ## Run locally
-
-Open `index.html` in a browser, or serve the folder:
 
 ```
 python3 -m http.server 8080   # then visit http://localhost:8080
 ```
 
-(The service worker needs `http(s)://` or `localhost` — opening via `file://`
-works for the app but skips offline caching.)
+(The service worker needs `http(s)://` or `localhost`; `file://` runs the app
+but skips offline caching.)
 
 ## Deploy (GitHub Pages)
 
-1. Merge this branch to `main`.
-2. Repo → **Settings → Pages → Deploy from a branch** → `main`, folder `/ (root)`.
-3. Live at `https://<user>.github.io/gym-buddy/`. All asset and service-worker
-   paths are relative, so it works from the `/gym-buddy/` sub-path.
-4. On your phone, open the URL and use **Add to Home Screen** to install it.
+Merge to `main`, then **Settings → Pages → Deploy from a branch → `main`,
+`/ (root)`**. Live at `https://<user>.github.io/gym-buddy/`. All paths are
+relative so it works from the sub-path. On a phone, open the URL and **Add to
+Home Screen** to install.
 
 ## Files
 
 | File | Purpose |
 |---|---|
-| `index.html` | App shell |
-| `app.js` | State, adaptive scheduler, logging UI, charts, persistence |
-| `data.js` | Exercise library + the blended plan template |
-| `styles.css` | Mobile-first styling |
+| `index.html` | App shell, iOS viewport/meta |
+| `app.js` | State, scheduler, logging UI, charts, persistence, migration |
+| `data.js` | Exercise library, sports, goals, plan generator |
+| `styles.css` | Rugged mobile-first design |
 | `manifest.webmanifest`, `sw.js` | PWA install + offline cache |
-| `icons/` | App icons |
+| `icons/`, `.nojekyll` | App icons, Pages config |
 
 ## Backups
 
-Settings → **Export backup (JSON)** downloads your full log. **Import backup**
+Settings → **Export Backup (JSON)** downloads your full log. **Import Backup**
 restores it on any device. Export periodically — clearing browser data wipes
 `localStorage`.
